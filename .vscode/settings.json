@@ -1,0 +1,13 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["snap.manifest.json"],
+      "url": "https://raw.githubusercontent.com/MetaMask/SIPs/main/assets/sip-9/snap.manifest.schema.json"
+    }
+  ],
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#3E2152",
+    "titleBar.activeBackground": "#572E73",
+    "titleBar.activeForeground": "#FBF9FD"
+  }
+}
