@@ -13,6 +13,7 @@ import {
   useInvokeSnap,
   useMetaMaskContext,
   useRequestSnap,
+  useRequest,
 } from '../hooks';
 import { isLocalSnap, shouldDisplayReconnectButton } from '../utils';
 
@@ -105,6 +106,7 @@ const Index = () => {
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
   const invokeSnap = useInvokeSnap();
+  const request = useRequest();
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
     ? isFlask
@@ -112,6 +114,38 @@ const Index = () => {
 
   const handleSendHelloClick = async () => {
     await invokeSnap({ method: 'hello' });
+  };
+
+  const handleTransaction = async () => {
+    const accounts = (await request({
+      method: 'eth_requestAccounts',
+    })) as string[];
+    if (accounts.length > 0) {
+      await request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: accounts[0],
+            to: '0xb0FA05DE5869A36e14c44891555641ff5B662CfE',
+          },
+        ],
+      });
+    }
+  };
+
+  const handleSignatures = async () => {
+    const accounts = (await request({
+      method: 'eth_requestAccounts',
+    })) as string[];
+
+    if (accounts.length === 0) {
+      return;
+    }
+
+    await request({
+      method: 'eth_sign',
+      params: [accounts[0], '0xdeadbeef'],
+    });
   };
 
   return (
@@ -181,6 +215,49 @@ const Index = () => {
                 onClick={handleSendHelloClick}
                 disabled={!installedSnap}
               />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Send Transaction',
+            description:
+              'Send a transaction to the blockchain to trigger a transaction insight.',
+            button: (
+              <button
+                onClick={() => {
+                  handleTransaction().catch(console.error);
+                }}
+              >
+                Send Transaction
+              </button>
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Sign Message',
+            description: 'Sign a message to trigger a message insight.',
+            button: (
+              <button
+                onClick={() => {
+                  handleSignatures().catch(console.error);
+                }}
+              >
+                Sign Message
+              </button>
             ),
           }}
           disabled={!installedSnap}
