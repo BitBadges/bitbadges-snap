@@ -1,3 +1,5 @@
+import type { AssetConditionGroup } from 'blockin';
+import type { NumberType } from 'blockin/dist/types/verify.types';
 import styled from 'styled-components';
 
 import {
@@ -101,6 +103,11 @@ const ErrorMessage = styled.div`
   }
 `;
 
+type ExpectedBalanceItem = {
+  label: string;
+  assetOwnershipRequirements: AssetConditionGroup<NumberType>;
+};
+
 const Index = () => {
   const { error } = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
@@ -126,11 +133,57 @@ const Index = () => {
         params: [
           {
             from: accounts[0],
-            to: '0xb0FA05DE5869A36e14c44891555641ff5B662CfE',
+            to: '0x1368D87519A1e491a370e47DE0db4E78282BE35e',
           },
         ],
       });
     }
+  };
+
+  const handleExpectedBalances = async () => {
+    // Persist some data.
+    await invokeSnap({
+      method: 'set_expected',
+      params: {
+        expectedBalances: [
+          {
+            label: 'BitBadges Beta',
+            assetOwnershipRequirements: {
+              $and: [
+                {
+                  assets: [
+                    {
+                      collectionId: '2',
+                      assetIds: [{ start: 1, end: 1 }],
+                      chain: 'BitBadges',
+                      mustOwnAmounts: { start: 1, end: 1 },
+                      ownershipTimes: [],
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ] as ExpectedBalanceItem[],
+      },
+    });
+
+    // // At a later time, get the stored data.
+    // const persistedData = await snap.request({
+    //   method: 'snap_manageState',
+    //   params: { operation: 'get' },
+    // });
+
+    // console.log(persistedData);
+    // // { hello: "world" }
+
+    // // If data storage is no longer necessary, clear it.
+    // await snap.request({
+    //   method: 'snap_manageState',
+    //   params: {
+    //     operation: 'clear',
+    //   },
+    // });
   };
 
   const handleSignatures = async () => {
@@ -257,6 +310,27 @@ const Index = () => {
                 }}
               >
                 Sign Message
+              </button>
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Set Expected Balances',
+            description: '',
+            button: (
+              <button
+                onClick={() => {
+                  handleExpectedBalances().catch(console.error);
+                }}
+              >
+                Set Expected Balances
               </button>
             ),
           }}

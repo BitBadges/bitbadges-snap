@@ -1,17 +1,18 @@
 {
-  "version": "0.1.0",
-  "description": "This Snap provides insights into what badges relevant addresses own or do not own on BitBadges.",
+  "version": "0.1.1",
+  "description": "This Snap provides insights into a BitBadges portfolio for relevant addresses",
   "proposedName": "BitBadges",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "git+https://github.com/bitbadges/bitbadges-snap.git"
   },
   "source": {
-    "shasum": "JKaDMA/QljyZeM+jzeLzc6SgMWfD6KMqtcGMUx8hmuc=",
+    "shasum": "8jMPCa9lCgK3ZTVLvXcnBmRBxvi75YRHWt7OXasukmE=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
-        "packageName": "snap",
+        "packageName": "bitbadges-snap",
+        "iconPath": "images/bitbadgeslogo.svg",
         "registry": "https://registry.npmjs.org/"
       }
     }
@@ -22,9 +23,12 @@
       "dapps": true,
       "snaps": false
     },
+    "endowment:network-access": {},
     "endowment:transaction-insight": {
       "allowTransactionOrigin": true
-    }
+    },
+    "snap_manageState": {},
+    "endowment:lifecycle-hooks": {}
   },
   "manifestVersion": "0.1"
 }
