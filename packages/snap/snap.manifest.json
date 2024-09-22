@@ -1,13 +1,13 @@
 {
-  "version": "0.1.1",
-  "description": "This Snap provides insights into a BitBadges portfolio for relevant addresses",
+  "version": "0.1.2",
+  "description": "Gain insights into a user's BitBadges portfolio, allowing you to learn about their digital identity.",
   "proposedName": "BitBadges",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bitbadges/bitbadges-snap.git"
   },
   "source": {
-    "shasum": "8jMPCa9lCgK3ZTVLvXcnBmRBxvi75YRHWt7OXasukmE=",
+    "shasum": "QrZVGBAj2/V2XMl9+hri8pfEtRcFdTB9qoiBm4AmoNk=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

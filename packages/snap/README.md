@@ -1,8 +1,7 @@
-# TypeScript Example Snap
+# BitBadge Snap
 
-This snap demonstrates how to develop a snap with TypeScript. It is a simple
-snap that displays a confirmation dialog when the `hello` JSON-RPC method is
-called.
+This snap is for the BitBadges portfolio. It allows you to gain insights into a user's BitBadges portfolio, allowing you to learn about their digital identity.
+It scans relevant addresses from a transaction and checks / displays custom criteria requirements.
 
 ## Testing
 
